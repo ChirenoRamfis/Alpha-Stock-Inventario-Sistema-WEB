@@ -1,0 +1,155 @@
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Invex Inventario
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css">
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-white min-h-screen flex justify-center p-4">
+  <div class="w-full max-w-md md:max-w-lg lg:max-w-xl rounded-lg shadow-md border border-gray-200">
+   <!-- Header -->
+   <header class="flex items-center justify-between p-4 border-b border-gray-200">
+    <div class="flex items-center space-x-3">
+     <img alt="Logo Invex con formas abstractas verdes y azules" class="w-12 h-12 rounded-xl object-contain" height="48" src="https://storage.googleapis.com/a1aa/image/304b6ed0-890d-4b34-476a-ee5e4304cca3.jpg" width="48"/>
+     <div>
+      <h1 class="text-sm font-semibold text-gray-900 leading-tight">
+       Invex
+      </h1>
+      <a class="text-xs text-blue-600 font-medium leading-tight" href="#">
+       Inventario RADEEL
+      </a>
+     </div>
+    </div>
+    <div class="flex space-x-4 text-gray-600 text-lg">
+     <button aria-label="Notificaciones" class="focus:outline-none">
+      <i class="far fa-bell">
+      </i>
+     </button>
+     <button aria-label="Perfil de usuario" class="focus:outline-none">
+      <i class="far fa-user">
+      </i>
+     </button>
+    </div>
+   </header>
+   <!-- Hola section -->
+   <section class="flex items-center space-x-3 p-4 border-b border-gray-200">
+    <img alt="Logo RADEEL con icono de rayo azul y verde" class="w-10 h-10 rounded-full object-contain" height="40" src="https://storage.googleapis.com/a1aa/image/d0d2d917-55a3-48af-7047-dbd6ff2c5830.jpg" width="40"/>
+    <div>
+     <h2 class="text-sm font-semibold text-gray-900 leading-tight">
+      ¡Hola!
+     </h2>
+     <p class="text-xs text-gray-500 leading-tight">
+      Gestiona tu inventario fácilmente
+     </p>
+    </div>
+   </section>
+   <!-- Escanear rápidamente botón -->
+   <section class="bg-blue-600 rounded-lg mx-4 my-4 p-4 flex justify-between items-center">
+    <div>
+     <h3 class="text-white font-semibold text-sm leading-tight">
+      Escanear rápidamente
+     </h3>
+     <p class="text-blue-100 text-xs leading-tight mt-1">
+      Escanea un código de barras para comenzar
+     </p>
+    </div>
+    <button aria-label="Escanear código QR" class="bg-blue-500 hover:bg-blue-400 text-white rounded-full w-8 h-8 flex items-center justify-center">
+     <i class="fas fa-qrcode text-xs">
+     </i>
+    </button>
+   </section>
+   <!-- Acceso rápido -->
+   <section class="px-4 mb-4">
+    <h4 class="text-xs font-semibold text-gray-900 mb-2">
+     Acceso rápido
+    </h4>
+    <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
+      <div class="bg-blue-600 text-white rounded-full p-2 mb-2">
+       <i class="fas fa-qrcode text-sm">
+       </i>
+      </div>
+      Escanear
+     </button>
+     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
+      <div class="bg-green-500 text-white rounded-full p-2 mb-2">
+       <i class="fas fa-cube text-sm">
+       </i>
+      </div>
+      Lista de materiales
+     </button>
+     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
+      <div class="bg-purple-500 text-white rounded-full p-2 mb-2">
+       <i class="fas fa-plus text-sm">
+       </i>
+      </div>
+      Añadir artículo
+     </button>
+     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
+      <div class="bg-orange-500 text-white rounded-full p-2 mb-2">
+       <i class="fas fa-chart-bar text-sm">
+       </i>
+      </div>
+      Informe
+     </button>
+    </div>
+   </section>
+   <!-- Vista rápida -->
+   <section class="mx-4 mb-4 border border-gray-200 rounded-lg p-4">
+    <h4 class="text-xs font-semibold text-gray-900 mb-3">
+     Vista rápida
+    </h4>
+    <div class="flex justify-between text-center text-xs font-semibold">
+     <div>
+      <p class="text-blue-600 text-lg leading-none">
+       247
+      </p>
+      <p class="text-gray-500 font-normal">
+       Total artículos
+      </p>
+     </div>
+     <div>
+      <p class="text-green-700 text-lg leading-none">
+       189
+      </p>
+      <p class="text-gray-500 font-normal">
+       Escaneados
+      </p>
+     </div>
+     <div>
+      <p class="text-orange-500 text-lg leading-none">
+       58
+      </p>
+      <p class="text-gray-500 font-normal">
+       Restantes
+      </p>
+     </div>
+    </div>
+   </section>
+   <!-- Barra azul inferior -->
+   <section class="bg-blue-600 rounded-lg mx-4 mb-4 p-3 flex items-center space-x-3">
+    <img alt="Logo Invex con formas abstractas verdes y azules" class="w-10 h-10 rounded-xl object-contain bg-white" height="40" src="https://storage.googleapis.com/a1aa/image/8497652a-f2b6-43e8-ad54-e0d3ee0f9ea6.jpg" width="40"/>
+    <div class="text-white text-xs leading-tight">
+     <p class="font-semibold">
+      Invex
+     </p>
+     <p class="text-blue-300">
+      Inventario RADEEL
+     </p>
+    </div>
+    <img alt="Logo RADEEL con icono de rayo azul y verde" class="w-6 h-6 rounded-full object-contain ml-auto" height="24" src="https://storage.googleapis.com/a1aa/image/d0d2d917-55a3-48af-7047-dbd6ff2c5830.jpg" width="24"/>
+   </section>
+  </div>
+ </body>
+</html>
