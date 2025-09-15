@@ -1,157 +1,603 @@
+<!DOCTYPE html>
 <html lang="es">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Invex Inventario
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <script src="main.js">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css">
-  <style>
-   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
- </head>
- <body class="bg-white min-h-screen flex justify-center p-4">
-  <div class="w-full max-w-md md:max-w-lg lg:max-w-xl rounded-lg shadow-md border border-gray-200">
-   <!-- Header -->
-   <header class="flex items-center justify-between p-4 border-b border-gray-200">
-    <div class="flex items-center space-x-3">
-     <img alt="Logo Invex con formas abstractas verdes y azules" class="w-12 h-12 rounded-xl object-contain" height="48" src="https://storage.googleapis.com/a1aa/image/304b6ed0-890d-4b34-476a-ee5e4304cca3.jpg" width="48"/>
-     <div>
-      <h1 class="text-sm font-semibold text-gray-900 leading-tight">
-       Invex
-      </h1>
-      <a class="text-xs text-blue-600 font-medium leading-tight" href="#">
-       Inventario RADEEL
-      </a>
-     </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9ff;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f1f3f4;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 30px;
+            gap: 5px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .products-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .products-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .products-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .recent-products {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-top: 20px;
+        }
+
+        .recent-products h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .recent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-form {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Sistema de Inventario</h1>
+            <p>Gestión inteligente de productos</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number" id="totalProducts">0</div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-number" id="recentProducts">0</div>
+                <div class="stat-label">Agregados Esta Semana</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number" id="totalValue">$0</div>
+                <div class="stat-label">Valor Total Inventario</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-number" id="productTypes">0</div>
+                <div class="stat-label">Tipos de Productos</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('dashboard')">Dashboard</button>
+                <button class="tab" onclick="switchTab('add')">Agregar Producto</button>
+                <button class="tab" onclick="switchTab('list')">Lista de Productos</button>
+            </div>
+
+            <div id="dashboard" class="tab-content active">
+                <div class="recent-products">
+                    <h3>🕐 Productos Agregados Recientemente</h3>
+                    <div id="recentProductsList"></div>
+                </div>
+            </div>
+
+            <div id="add" class="tab-content">
+                <h2>➕ Agregar Nuevo Producto</h2>
+                <form id="productForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="productName">Nombre del Producto</label>
+                            <input type="text" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Categoría</label>
+                            <select id="productCategory" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Electrónicos">Electrónicos</option>
+                                <option value="Ropa">Ropa</option>
+                                <option value="Hogar">Hogar</option>
+                                <option value="Deportes">Deportes</option>
+                                <option value="Libros">Libros</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productQuantity">Cantidad</label>
+                            <input type="number" id="productQuantity" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Precio ($)</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                </form>
+            </div>
+
+            <div id="list" class="tab-content">
+                <h2>📋 Lista de Productos</h2>
+                <div id="editForm" class="edit-form" style="display: none;">
+                    <h3>✏️ Editar Producto</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editName">Nombre</label>
+                            <input type="text" id="editName">
+                        </div>
+                        <div class="form-group">
+                            <label for="editCategory">Categoría</label>
+                            <select id="editCategory">
+                                <option value="Electrónicos">Electrónicos</option>
+                                <option value="Ropa">Ropa</option>
+                                <option value="Hogar">Hogar</option>
+                                <option value="Deportes">Deportes</option>
+                                <option value="Libros">Libros</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editQuantity">Cantidad</label>
+                            <input type="number" id="editQuantity" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPrice">Precio</label>
+                            <input type="number" id="editPrice" step="0.01" min="0">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button onclick="saveEdit()" class="btn btn-primary">Guardar</button>
+                        <button onclick="cancelEdit()" class="btn btn-secondary">Cancelar</button>
+                    </div>
+                </div>
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Fecha Agregado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="flex space-x-4 text-gray-600 text-lg">
-     <button aria-label="Notificaciones" class="focus:outline-none">
-      <i class="far fa-bell">
-      </i>
-     </button>
-     <button aria-label="Perfil de usuario" class="focus:outline-none">
-      <i class="far fa-user">
-      </i>
-     </button>
-    </div>
-   </header>
-   <!-- Hola section -->
-   <section class="flex items-center space-x-3 p-4 border-b border-gray-200">
-    <img alt="Logo RADEEL con icono de rayo azul y verde" class="w-10 h-10 rounded-full object-contain" height="40" src="https://storage.googleapis.com/a1aa/image/d0d2d917-55a3-48af-7047-dbd6ff2c5830.jpg" width="40"/>
-    <div>
-     <h2 class="text-sm font-semibold text-gray-900 leading-tight">
-      ¡Hola!
-     </h2>
-     <p class="text-xs text-gray-500 leading-tight">
-      Gestiona tu inventario fácilmente
-     </p>
-    </div>
-   </section>
-   <!-- Escanear rápidamente botón -->
-   <section class="bg-blue-600 rounded-lg mx-4 my-4 p-4 flex justify-between items-center">
-    <div>
-     <h3 class="text-white font-semibold text-sm leading-tight">
-      Escanear rápidamente
-     </h3>
-     <p class="text-blue-100 text-xs leading-tight mt-1">
-      Escanea un código de barras para comenzar
-     </p>
-    </div>
-    <button aria-label="Escanear código QR" class="bg-blue-500 hover:bg-blue-400 text-white rounded-full w-8 h-8 flex items-center justify-center">
-     <i class="fas fa-qrcode text-xs">
-     </i>
-    </button>
-   </section>
-   <!-- Acceso rápido -->
-   <section class="px-4 mb-4">
-    <h4 class="text-xs font-semibold text-gray-900 mb-2">
-     Acceso rápido
-    </h4>
-    <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
-     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
-      <div class="bg-blue-600 text-white rounded-full p-2 mb-2">
-       <i class="fas fa-qrcode text-sm">
-       </i>
-      </div>
-      Escanear
-     </button>
-     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
-      <div class="bg-green-500 text-white rounded-full p-2 mb-2">
-       <i class="fas fa-cube text-sm">
-       </i>
-      </div>
-      Lista de materiales
-     </button>
-     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
-      <div class="bg-purple-500 text-white rounded-full p-2 mb-2">
-       <i class="fas fa-plus text-sm">
-       </i>
-      </div>
-      Añadir artículo
-     </button>
-     <button class="flex flex-col items-center justify-center bg-white border border-gray-200 rounded-lg py-4 text-xs text-gray-700 shadow-sm hover:shadow-md focus:outline-none" type="button">
-      <div class="bg-orange-500 text-white rounded-full p-2 mb-2">
-       <i class="fas fa-chart-bar text-sm">
-       </i>
-      </div>
-      Informe
-     </button>
-    </div>
-   </section>
-   <!-- Vista rápida -->
-   <section class="mx-4 mb-4 border border-gray-200 rounded-lg p-4">
-    <h4 class="text-xs font-semibold text-gray-900 mb-3">
-     Vista rápida
-    </h4>
-    <div class="flex justify-between text-center text-xs font-semibold">
-     <div>
-      <p class="text-blue-600 text-lg leading-none">
-       247
-      </p>
-      <p class="text-gray-500 font-normal">
-       Total artículos
-      </p>
-     </div>
-     <div>
-      <p class="text-green-700 text-lg leading-none">
-       189
-      </p>
-      <p class="text-gray-500 font-normal">
-       Escaneados
-      </p>
-     </div>
-     <div>
-      <p class="text-orange-500 text-lg leading-none">
-       58
-      </p>
-      <p class="text-gray-500 font-normal">
-       Restantes
-      </p>
-     </div>
-    </div>
-   </section>
-   <!-- Barra azul inferior -->
-   <section class="bg-blue-600 rounded-lg mx-4 mb-4 p-3 flex items-center space-x-3">
-    <img alt="Logo Invex con formas abstractas verdes y azules" class="w-10 h-10 rounded-xl object-contain bg-white" height="40" src="https://storage.googleapis.com/a1aa/image/8497652a-f2b6-43e8-ad54-e0d3ee0f9ea6.jpg" width="40"/>
-    <div class="text-white text-xs leading-tight">
-     <p class="font-semibold">
-      Invex
-     </p>
-     <p class="text-blue-300">
-      Inventario RADEEL
-     </p>
-    </div>
-    <img alt="Logo RADEEL con icono de rayo azul y verde" class="w-6 h-6 rounded-full object-contain ml-auto" height="24" src="https://storage.googleapis.com/a1aa/image/d0d2d917-55a3-48af-7047-dbd6ff2c5830.jpg" width="24"/>
-   </section>
-  </div>
- </body>
+
+    <script>
+        let products = [
+            { id: 1, name: 'Laptop HP Pavilion', category: 'Electrónicos', quantity: 15, price: 899.99, dateAdded: '2024-09-10' },
+            { id: 2, name: 'Mouse Logitech', category: 'Electrónicos', quantity: 50, price: 29.99, dateAdded: '2024-09-12' },
+            { id: 3, name: 'Teclado Mecánico', category: 'Electrónicos', quantity: 25, price: 89.99, dateAdded: '2024-09-14' },
+            { id: 4, name: 'Silla Ergonómica', category: 'Hogar', quantity: 8, price: 199.99, dateAdded: '2024-09-11' }
+        ];
+
+        let editingProductId = null;
+
+        function switchTab(tabName) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Quitar clase active de todos los tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'list') {
+                renderProductsTable();
+            }
+        }
+
+        function updateStats() {
+            const totalProducts = products.reduce((sum, product) => sum + product.quantity, 0);
+            const totalValue = products.reduce((sum, product) => sum + (product.quantity * product.price), 0);
+            const productTypes = products.length;
+            
+            // Productos de la última semana
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const recentProducts = products.filter(product => 
+                new Date(product.dateAdded) >= oneWeekAgo
+            ).reduce((sum, product) => sum + product.quantity, 0);
+
+            document.getElementById('totalProducts').textContent = totalProducts;
+            document.getElementById('recentProducts').textContent = recentProducts;
+            document.getElementById('totalValue').textContent = '$' + totalValue.toLocaleString('es-ES', {minimumFractionDigits: 2});
+            document.getElementById('productTypes').textContent = productTypes;
+        }
+
+        function renderRecentProducts() {
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            const recentProducts = products.filter(product => 
+                new Date(product.dateAdded) >= oneWeekAgo
+            ).sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+
+            const container = document.getElementById('recentProductsList');
+            
+            if (recentProducts.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No hay productos agregados recientemente</p>';
+                return;
+            }
+
+            container.innerHTML = recentProducts.map(product => `
+                <div class="recent-item">
+                    <div>
+                        <strong>${product.name}</strong>
+                        <br>
+                        <small style="color: #666;">${product.category} - Cantidad: ${product.quantity}</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-weight: bold; color: #667eea;">$${product.price.toFixed(2)}</div>
+                        <small style="color: #666;">${formatDate(product.dateAdded)}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderProductsTable() {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td><strong>${product.name}</strong></td>
+                    <td><span style="background: #e3f2fd; padding: 4px 8px; border-radius: 4px; font-size: 12px;">${product.category}</span></td>
+                    <td>${product.quantity}</td>
+                    <td>$${product.price.toFixed(2)}</td>
+                    <td>${formatDate(product.dateAdded)}</td>
+                    <td class="actions">
+                        <button onclick="editProduct(${product.id})" class="btn btn-secondary" style="padding: 6px 12px; font-size: 14px;">✏️ Editar</button>
+                        <button onclick="deleteProduct(${product.id})" class="btn btn-danger" style="padding: 6px 12px; font-size: 14px;">🗑️ Eliminar</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function addProduct(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const quantity = parseInt(document.getElementById('productQuantity').value);
+            const price = parseFloat(document.getElementById('productPrice').value);
+            
+            if (!name || !category || !quantity || !price) {
+                alert('Por favor complete todos los campos');
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                category,
+                quantity,
+                price,
+                dateAdded: new Date().toISOString().split('T')[0]
+            };
+
+            products.push(newProduct);
+            
+            // Limpiar formulario
+            document.getElementById('productForm').reset();
+            
+            // Actualizar estadísticas y listas
+            updateStats();
+            renderRecentProducts();
+            
+            alert('Producto agregado exitosamente!');
+        }
+
+        function editProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            editingProductId = id;
+            
+            document.getElementById('editName').value = product.name;
+            document.getElementById('editCategory').value = product.category;
+            document.getElementById('editQuantity').value = product.quantity;
+            document.getElementById('editPrice').value = product.price;
+            
+            document.getElementById('editForm').style.display = 'block';
+            document.getElementById('editForm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveEdit() {
+            if (!editingProductId) return;
+            
+            const productIndex = products.findIndex(p => p.id === editingProductId);
+            if (productIndex === -1) return;
+
+            const name = document.getElementById('editName').value;
+            const category = document.getElementById('editCategory').value;
+            const quantity = parseInt(document.getElementById('editQuantity').value);
+            const price = parseFloat(document.getElementById('editPrice').value);
+
+            if (!name || !category || !quantity || !price) {
+                alert('Por favor complete todos los campos');
+                return;
+            }
+
+            products[productIndex] = {
+                ...products[productIndex],
+                name,
+                category,
+                quantity,
+                price
+            };
+
+            cancelEdit();
+            renderProductsTable();
+            updateStats();
+            renderRecentProducts();
+            
+            alert('Producto actualizado exitosamente!');
+        }
+
+        function cancelEdit() {
+            editingProductId = null;
+            document.getElementById('editForm').style.display = 'none';
+        }
+
+        function deleteProduct(id) {
+            if (confirm('¿Está seguro de que desea eliminar este producto?')) {
+                products = products.filter(p => p.id !== id);
+                renderProductsTable();
+                updateStats();
+                renderRecentProducts();
+                alert('Producto eliminado exitosamente!');
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('productForm').addEventListener('submit', addProduct);
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderRecentProducts();
+            renderProductsTable();
+        });
+    </script>
+</body>
 </html>
