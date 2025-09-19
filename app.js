@@ -1,19 +1,16 @@
 const express = require("express");
 const path = require("path");
-
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public"))); // Servir HTML y JS
-
-// API para guardar productos
-app.post("/api/productos", (req, res) => {
-  const { nombre } = req.body;
-  console.log("Producto recibido:", nombre);
-  // Aquí iría la lógica para guardarlo en SQLite
-  res.json({ mensaje: "Producto guardado con éxito" });
+// Ruta raíz → mostrar login.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
 });
+
+
+// Middleware para servir archivos estáticos (CSS, JS, imágenes, etc.)
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

@@ -80,6 +80,7 @@ const loginForm = document.getElementById('loginForm');
                     // Simular redirección después de 2 segundos
                     setTimeout(() => {
                         // Aquí normalmente redirigirías a la página principal
+                        localStorage.setItem("logueado", "true");
                         window.location.href = "index.html";
                     }, 2000);
                 } else {
